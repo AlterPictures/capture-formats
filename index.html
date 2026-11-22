@@ -452,6 +452,10 @@ const onChip = e => {
   document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x.dataset.k === cat));
   try { localStorage.setItem("cat", cat); } catch (_) {}
   apply(true);
+  b.blur();
+  // 분류를 누르면 그 분류에서 맨 처음 나오는 확장자로 바로 이동 (미니 바 높이가 바뀐 뒤 계산)
+  const first = reels.find(r => !r.hidden);
+  if (first) setTimeout(() => goReel(first), 80);
 };
 $("chips").addEventListener("click", onChip);
 $("chips2").addEventListener("click", onChip);
@@ -538,11 +542,15 @@ onScrollFrame();
 const onTile = e => {
   const a = e.target.closest(".tile"); if (!a) return;
   e.preventDefault();
-  const sec = $(a.dataset.id);
   a.blur();
+  goReel($(a.dataset.id));
+};
+function goReel(sec) {
   lockId = sec.id; setOn(sec.id);
   clearTimeout(lockTimer); lockTimer = setTimeout(unlock, 2500); // 안전장치
-  sec.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"});
+  // 목적지를 직접 계산 (고정 바 높이가 바뀌어도 중간에 멈추지 않도록 scroll-padding에 의존하지 않음)
+  const top = sec.getBoundingClientRect().top + scrollY - tabsH() - mini.offsetHeight;
+  scrollTo({top: Math.max(0, top), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
   sec.classList.remove("flash"); void sec.offsetWidth; sec.classList.add("flash");
   setTimeout(() => sec.classList.remove("flash"), 900);
 };
