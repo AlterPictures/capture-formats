@@ -17,8 +17,8 @@
   --bg:#F2F3F6; --bg-2:#E9EBF0; --surface:#FFFFFF; --ink:#12151C; --muted:#5D6574; --line:#DDE1E8; --line-2:#C8CED8;
   --accent:#C2581C; --accent-2:#1F6FA8; --glow:rgba(194,88,28,.16);
   --ok:#1E7A45; --ok-bg:#DDF3E4; --warn:#9A5A00; --warn-bg:#FFF0D6; --std-bg:#ECEEF3; --bad:#B4233C; --bad-bg:#FBDDE2;
-  --c-phone:#2E62C9; --c-action:#C9480F; --c-gimbal:#0E7C86; --c-vr:#7A3BE6; --c-drone:#0A6FA6;
-  --c-ilc:#B4610B; --c-cine:#B91C3C; --c-bcast:#4D7C0F; --c-rec:#6A2FD0; --c-legacy:#64748B;
+  --c-cine:#C0504D; --c-ilc:#F79646; --c-drone:#4F81BD; --c-action:#9BBB59; --c-gimbal:#4BACC6;
+  --c-vr:#8064A2; --c-phone:#C9A33E; --c-bcast:#A07850; --c-legacy:#8497B0; --c-rec:#C27BA0;
   --f-display:"Bricolage Grotesque","IBM Plex Sans KR",system-ui,sans-serif;
   --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -28,15 +28,15 @@
   --bg:#0C0E13; --bg-2:#11141B; --surface:#161A22; --ink:#ECEBE6; --muted:#9199A6; --line:#232935; --line-2:#323A48;
   --accent:#F2A36B; --accent-2:#7CC2EA; --glow:rgba(242,163,107,.14);
   --ok:#7FD69E; --ok-bg:#16301F; --warn:#F0BC67; --warn-bg:#33270F; --std-bg:#1E232D; --bad:#F59AAA; --bad-bg:#3A1A21;
-  --c-phone:#86AEF7; --c-action:#F7A072; --c-gimbal:#5FCDD5; --c-vr:#BCA0FB; --c-drone:#71C4F0;
-  --c-ilc:#F2B866; --c-cine:#F78EA3; --c-bcast:#A9D663; --c-rec:#C6A8FB; --c-legacy:#A5B0C0;
+  --c-cine:#C96B68; --c-ilc:#F8A662; --c-drone:#6994C7; --c-action:#AAC572; --c-gimbal:#66B8CF;
+  --c-vr:#937BB0; --c-phone:#D1B05B; --c-bcast:#AE8C6A; --c-legacy:#96A7BC; --c-rec:#CB8FAE;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0C0E13; --bg-2:#11141B; --surface:#161A22; --ink:#ECEBE6; --muted:#9199A6; --line:#232935; --line-2:#323A48;
   --accent:#F2A36B; --accent-2:#7CC2EA; --glow:rgba(242,163,107,.14);
   --ok:#7FD69E; --ok-bg:#16301F; --warn:#F0BC67; --warn-bg:#33270F; --std-bg:#1E232D; --bad:#F59AAA; --bad-bg:#3A1A21;
-  --c-phone:#86AEF7; --c-action:#F7A072; --c-gimbal:#5FCDD5; --c-vr:#BCA0FB; --c-drone:#71C4F0;
-  --c-ilc:#F2B866; --c-cine:#F78EA3; --c-bcast:#A9D663; --c-rec:#C6A8FB; --c-legacy:#A5B0C0;
+  --c-cine:#C96B68; --c-ilc:#F8A662; --c-drone:#6994C7; --c-action:#AAC572; --c-gimbal:#66B8CF;
+  --c-vr:#937BB0; --c-phone:#D1B05B; --c-bcast:#AE8C6A; --c-legacy:#96A7BC; --c-rec:#CB8FAE;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -256,7 +256,7 @@ main{padding-block:30px 40px}
 @keyframes rise{from{opacity:.001;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
 .reel.flash .card{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),var(--shadow);transition:border-color .2s,box-shadow .2s}
 .meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;color:var(--cc);background:color-mix(in srgb,var(--cc) 13%,transparent)}
+.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;color:color-mix(in srgb,var(--cc) 70%,var(--ink));background:color-mix(in srgb,var(--cc) 13%,transparent)}
 .ver{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
 .ver.web{color:var(--ok);background:var(--ok-bg)}
 .ver.std{color:var(--muted);background:var(--std-bg)}
