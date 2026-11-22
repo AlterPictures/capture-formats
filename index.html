@@ -52,6 +52,7 @@ a{color:inherit}
 .hero{padding-block:56px 28px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:-40% -10% auto auto;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 65%);pointer-events:none}
 .tc{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.tc .tz{opacity:.7;letter-spacing:.06em}
 .tc .rec{display:inline-flex;align-items:center;gap:7px;color:var(--accent)}
 .tc .rec::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.6s steps(2,start) infinite}
 @keyframes blink{50%{opacity:.2}}
@@ -230,7 +231,7 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
 
 <header class="hero gut">
   <div class="wrap">
-    <div class="tc"><span class="rec">REC</span><span>TC <span id="tc">00:00:00:00</span></span><span id="asof"></span><span>디지털 촬영 원본 전용</span></div>
+    <div class="tc"><span class="rec">REC</span><span>TC <span id="tc">00:00:00:00</span> <span id="tz" class="tz"></span></span><span id="asof"></span><span>디지털 촬영 원본 전용</span></div>
     <h1>촬영 원본<br><em>포맷 사전</em></h1>
     <p class="lede">ARRI와 RED의 시네마 카메라에서 미러리스, 드론, 액션캠, 스마트폰까지.<br>아래에서 카메라 분류를 고르면 해당 확장자만 남고, 확장자를 누르면 그 포맷 정리로 바로 이동합니다. 포맷마다 Video Codec, Container, 비트심도, 대표 기종과 검증 상태를 함께 담았습니다.</p>
     <div class="stats" id="stats"></div>
@@ -323,10 +324,14 @@ $("stats").innerHTML = [
 $("bars").innerHTML = Object.keys(CATS).map(k => `<i style="--cc:var(--c-${k});flex-grow:${perCat[k]}" data-k="${k}"></i>`).join("");
 $("barsLegend").innerHTML = Object.entries(CATS).map(([k, v]) => `<span style="--cc:var(--c-${k})">${v} ${perCat[k]}</span>`).join("");
 
-// 타임코드 장식 (24fps)
-(() => { const el = $("tc"); const t0 = performance.now(); const p = n => String(n).padStart(2, "0");
-  const tick = () => { const f = Math.floor((performance.now() - t0) / 1000 * 24); el.textContent = `${p(Math.floor(f/86400))}:${p(Math.floor(f/1440)%60)}:${p(Math.floor(f/24)%60)}:${p(f%24)}`; };
-  tick(); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(tick, 1000/24); })();
+// 타임코드: 보는 사람 기기의 현재 시각 (Time of Day, 24fps) + 시간대
+(() => { const el = $("tc"), tz = $("tz"); const p = n => String(n).padStart(2, "0");
+  const zone = d => { const m = -d.getTimezoneOffset(), h = Math.trunc(Math.abs(m) / 60), r = Math.abs(m) % 60;
+    return `GMT${m < 0 ? "−" : "+"}${h}${r ? ":" + p(r) : ""}`; };
+  const tick = () => { const d = new Date();
+    el.textContent = `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}:${p(Math.floor(d.getMilliseconds() * 24 / 1000))}`;
+    const z = zone(d); if (tz.textContent !== z) tz.textContent = z; };
+  tick(); setInterval(tick, matchMedia("(prefers-reduced-motion: reduce)").matches ? 1000 : 1000 / 24); })();
 
 // ---------- 분류 칩 ----------
 let cat = "all";
