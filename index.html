@@ -87,6 +87,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--accent),var(--ac
 :root[lang="en"] .concept code.dup{display:none}
 :root[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
 :root[lang="ja"] body{word-break:auto-phrase}
+.nw{white-space:nowrap}
 .lede2{max-width:960px;text-wrap:pretty;color:var(--muted);font-size:14px;margin:8px 0 0}
 .ov{margin-top:30px}
 .ov-head h2{margin:0;font-size:15px;font-weight:700;letter-spacing:.02em}
@@ -997,6 +998,21 @@ apply(false);
 route();
 $("q").placeholder = PH[page];
 spyFrame();
+// ---------- 일본어: auto-phrase 미지원 브라우저(사파리·파이어폭스)에서 카타카나 단어가 중간에 끊기지 않게 ----------
+if (LANG === "ja" && !(window.CSS && CSS.supports && CSS.supports("word-break", "auto-phrase"))) {
+  const RX = /[ァ-ヺー-ヿ]{2,}/g;
+  const wrapKana = root => {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => { RX.lastIndex = 0; return RX.test(n.data) && n.parentElement && !n.parentElement.closest(".nw,script,style,textarea,title,option") ? 1 : 2; } });
+    const list = []; while (w.nextNode()) list.push(w.currentNode);
+    for (const n of list) {
+      const f = document.createDocumentFragment(); let i = 0;
+      n.data.replace(RX, (m, o) => { f.append(n.data.slice(i, o)); const sp = document.createElement("span"); sp.className = "nw"; sp.textContent = m; f.append(sp); i = o + m.length; return m; });
+      f.append(n.data.slice(i)); n.replaceWith(f);
+    }
+  };
+  wrapKana(document.body);
+  new MutationObserver(ms => { for (const m of ms) for (const a of m.addedNodes) { if (a.nodeType === 1 && !a.classList.contains("nw")) wrapKana(a); else if (a.nodeType === 3 && a.parentNode && a.parentNode.isConnected) wrapKana(a.parentNode); } }).observe(document.body, { childList: true, subtree: true });
+}
 </script>
 
 </html>
