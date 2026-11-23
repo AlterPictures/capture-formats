@@ -184,9 +184,12 @@ mark.hit{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inher
 mark.hit.blink{animation:hitblink 1.3s ease}
 @keyframes hitblink{0%,36%,72%{background:var(--accent);color:#fff}18%,54%{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit}}
 .mbr,.tbl tbody tr{transition:border-color .5s,box-shadow .5s,background .5s}
-.card.hitflash,.mbr.hitflash{border-color:var(--accent)!important;box-shadow:0 0 0 4px var(--glow),var(--shadow)!important;transition:border-color .2s,box-shadow .2s}
-.tbl tbody tr.hitflash{background:color-mix(in srgb,var(--accent) 10%,transparent)}
-@media (max-width:640px){.tbl tbody tr.hitflash{background:var(--surface);border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),var(--shadow)}}
+/* 깜빡임: 한 번 깜빡이던 시간(1초) 안에 두 번 */
+@keyframes blink2{0%,100%{box-shadow:var(--shadow)}30%,55%{box-shadow:0 0 0 1.5px var(--accent),0 0 0 6px var(--glow),var(--shadow)}}
+@keyframes blink2bg{0%,100%{background:transparent}30%,55%{background:color-mix(in srgb,var(--accent) 12%,transparent)}}
+.card.hitflash,.mbr.hitflash,.reel.flash .card{animation:blink2 1.61s cubic-bezier(.42,0,.58,1) both}
+.tbl tbody tr.hitflash{animation:blink2bg 1.61s cubic-bezier(.42,0,.58,1) both}
+@media (max-width:640px){.tbl tbody tr.hitflash{animation:blink2 1.61s cubic-bezier(.42,0,.58,1) both}}
 
 /* 하단 검색 바: 스크롤 중엔 작아지고, 멈추면 다시 커짐 */
 .sb{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:24;width:min(560px,calc(100% - 32px));display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--line-2);box-shadow:0 10px 30px -10px rgba(0,0,0,.45);transform:translateX(-50%);transform-origin:50% 100%;transition:transform .45s cubic-bezier(.32,.72,0,1),width .45s cubic-bezier(.32,.72,0,1),opacity .3s}
@@ -294,7 +297,6 @@ main{padding-block:30px 40px}
 .card:hover{transform:translateY(-2px);border-color:var(--line-2)}
 .card.in{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:.001;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
-.reel.flash .card{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),var(--shadow);transition:border-color .2s,box-shadow .2s}
 .meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;color:color-mix(in srgb,var(--cc) 70%,var(--ink));background:color-mix(in srgb,var(--cc) 13%,transparent)}
 .ver{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
@@ -367,6 +369,34 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
+}
+/* ---- 탭인탭: 카메라 분류 탭 + 그 안의 확장자/브랜드 상자. 줄바꿈만, 가로 스크롤 없음. 축소 애니메이션 없이 그대로 고정 ---- */
+.mini{display:none!important}
+#bar,#mbar{position:sticky;top:var(--tabs-h,64px);z-index:15;background:var(--bg);border-bottom:0;box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax);padding-block:4px}
+#mbar{margin:8px 0 2px}
+#bar .bar-in,#mbar .bar-in{display:block;padding:0;background:var(--surface);border:1px solid var(--line-2);border-radius:14px;overflow:hidden;transform:none!important;opacity:1!important;box-shadow:0 10px 24px -20px rgba(0,0,0,.6)}
+#bar .row{display:none}
+#bar .chips,#mbar .chips{display:flex;flex-wrap:wrap;gap:0 2px;padding:3px 8px 0;border-bottom:1px solid var(--line-2);background:color-mix(in srgb,var(--bg) 55%,var(--surface))}
+#bar .chip,#mbar .chip{border:0;border-radius:9px 9px 0 0;background:transparent;color:var(--muted);padding:5px 11px 6px;font-size:12px;line-height:1.3;position:relative;margin-bottom:-1px}
+#bar .chip:hover,#mbar .chip:hover{transform:none;color:var(--ink)}
+#bar .chip[aria-pressed="true"],#mbar .chip[aria-pressed="true"]{background:var(--surface);color:var(--ink);border:0}
+#bar .chip[aria-pressed="true"]::after,#mbar .chip[aria-pressed="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:2px;border-radius:2px;background:var(--cc)}
+#bar .chip[aria-pressed="true"] small,#mbar .chip[aria-pressed="true"] small{color:var(--muted);opacity:1}
+#bar .rail,#mbar .rail{padding:6px 10px 7px;gap:4px;min-height:16px}
+#bar .tile,#mbar .tile{font-size:11px;line-height:1.35;padding:2px 7px;border-radius:7px;background:var(--bg)}
+#bar .tile.on,#mbar .tile.on{background:var(--accent)}
+@media (max-width:640px){
+  #bar,#mbar{padding-block:3px}
+  #bar .chips,#mbar .chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:2px 3px 0;gap:0}
+  #bar .chip,#mbar .chip{justify-content:center;padding:4px 1px 4px;font-size:10px;line-height:1.25;gap:3px;border-radius:7px 7px 0 0;min-width:0;white-space:nowrap}
+  #bar .chip .dot,#mbar .chip .dot{width:5px;height:5px;flex:none}
+  #bar .chip .lf,#mbar .chip .lf,#bar .chip small,#mbar .chip small{display:none}
+  #bar .chip .ls,#mbar .chip .ls{display:inline;overflow:hidden;text-overflow:clip}
+  #bar .chip[aria-pressed="true"]::after,#mbar .chip[aria-pressed="true"]::after{left:6px;right:6px}
+  #bar .rail,#mbar .rail{padding:4px 5px 5px;gap:3px}
+  #bar .tile,#mbar .tile{font-size:9px;line-height:1.3;padding:1px 5px;border-radius:5px;letter-spacing:-.03em}
+  #bar .tile sup,#mbar .tile sup{display:none}
+  :root[lang="ja"] #bar .chip,:root[lang="ja"] #mbar .chip{font-size:9px;letter-spacing:-.05em}
 }
 </style>
 
@@ -544,7 +574,7 @@ $("chips").innerHTML = $("chips2").innerHTML = chipsHTML;
 
 // ---------- 확장자 레일(큰 바 + 미니 바) + 릴 카드 ----------
 const tileHTML = short => DATA.groups.map(g => `<a class="tile" href="#${slug(g.ext)}" data-id="${slug(g.ext)}">${E(short ? g.ext.replace(/\s*·\s*/g, "/") : g.ext)}<sup>${g.rows.length}</sup></a>`).join("");
-$("rail").innerHTML = tileHTML(false);
+$("rail").innerHTML = tileHTML(matchMedia("(max-width:640px)").matches);
 $("rail2").innerHTML = tileHTML(true);
 const card = r => {
   const devs = r.d.split(/,\s*/).map(x => `<span>${E(x)}</span>`).join("");
@@ -688,7 +718,8 @@ function setMini(show) {
 function onScrollFrame() {
   ticking = false;
   if (page !== "dict") return;
-  const mh = tabsH() + mini.offsetHeight;
+  return; // 탭인탭: 축소 애니메이션·미니 바 없음
+  const mh = tabsH() + $("bar").offsetHeight;
   const b = $("bar").getBoundingClientRect();
   const railBottom = $("rail").getBoundingClientRect().bottom;
   // 0 = 큰 바가 화면 위쪽에 닿기 전, 1 = 확장자 줄이 미니 바 높이까지 올라감
@@ -712,35 +743,64 @@ const onTile = e => {
   a.blur();
   goReel($(a.dataset.id));
 };
+// 거리 비례 스크롤: 가까우면 천천히 부드럽게, 멀수록 빠르게 (최대 약 0.95초)
+let smoothRAF = 0, smoothing = false, onArrive = [];
+const arrive = () => { smoothing = false; const f = onArrive; onArrive = []; f.forEach(fn => fn()); };
+function smoothTo(y) {
+  cancelAnimationFrame(smoothRAF); smoothing = false;
+  y = Math.max(0, Math.min(y, document.documentElement.scrollHeight - innerHeight));
+  const y0 = scrollY, d = y - y0;
+  if (REDUCE() || Math.abs(d) < 2) { scrollTo({top: y, behavior: "instant"}); return; }
+  smoothing = true;
+  const dur = Math.min(950, 520 + 2.6 * Math.sqrt(Math.abs(d))), t0 = performance.now();
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const step = now => { const t = Math.min(1, (now - t0) / dur); scrollTo({top: y0 + d * ease(t), behavior: "instant"}); if (t < 1) smoothRAF = requestAnimationFrame(step); else arrive(); };
+  smoothRAF = requestAnimationFrame(step);
+}
+["wheel", "touchstart", "keydown"].forEach(ev => addEventListener(ev, () => { if (smoothing) { cancelAnimationFrame(smoothRAF); arrive(); } }, {passive: true}));
+// 스크롤이 멈춘 뒤(도착한 뒤)에 실행 → 먼 곳으로 이동해도 깜빡임을 볼 수 있게
+function afterScroll(fn) {
+  if (smoothing) { onArrive.push(fn); return; }
+  if (true) { fn(); return; }
+  let last = scrollY, still = 0, moved = false; const t0 = performance.now();
+  const tick = () => {
+    const y = scrollY;
+    if (y !== last) { moved = true; still = 0; last = y; } else still++;
+    if ((moved && still >= 5) || (!moved && still >= 12) || performance.now() - t0 > 3500) fn(); else requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+function flashEls(els, cls, ms) {
+  afterScroll(() => { els.forEach(e => { e.classList.remove(cls); void e.offsetWidth; e.classList.add(cls); }); setTimeout(() => els.forEach(e => e.classList.remove(cls)), ms); });
+}
 function goReel(sec) {
   lockId = sec.id; setOn(sec.id);
   clearTimeout(lockTimer); lockTimer = setTimeout(unlock, 2500); // 안전장치
   // 목적지를 직접 계산 (고정 바 높이가 바뀌어도 중간에 멈추지 않도록 scroll-padding에 의존하지 않음)
-  const top = sec.getBoundingClientRect().top + scrollY - tabsH() - mini.offsetHeight;
-  scrollTo({top: Math.max(0, top), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
-  sec.classList.remove("flash"); void sec.offsetWidth; sec.classList.add("flash");
-  setTimeout(() => sec.classList.remove("flash"), 900);
+  const top = sec.getBoundingClientRect().top + scrollY - tabsH() - $("bar").offsetHeight;
+  smoothTo(top);
+  flashEls([sec], "flash", 1660);
 };
 $("rail").addEventListener("click", onTile);
 $("rail2").addEventListener("click", onTile);
 
 // ---------- 스크롤 스파이: 보고 있는 확장자를 레일에 표시 ----------
 // 이동 위치 보정값은 미니 바 높이 (이동 후에는 항상 미니 바가 떠 있음)
-const setBarH = () => { const th = tabsH(); document.documentElement.style.setProperty("--tabs-h", th + "px"); document.documentElement.style.setProperty("--bar-h", th + (page === "dict" ? mini.offsetHeight : 0) + "px"); };
-setBarH(); new ResizeObserver(setBarH).observe(mini); new ResizeObserver(setBarH).observe($("tabs"));
+const setBarH = () => { const th = tabsH(); document.documentElement.style.setProperty("--tabs-h", th + "px"); document.documentElement.style.setProperty("--bar-h", th + (page === "dict" ? $("bar").offsetHeight : 0) + "px"); };
+setBarH(); new ResizeObserver(setBarH).observe($("bar")); new ResizeObserver(setBarH).observe($("tabs"));
 let current = null, lockId = null, lockTimer = 0;
 function setOn(id){
   if (id === current) return; current = id;
   allTiles.forEach(t => t.classList.toggle("on", t.dataset.id === id));
 }
 // 스크롤 위치로 직접 계산: 미니 바 바로 아래 기준선을 지난 마지막 섹션이 현재 섹션
-function spyLine(){ return tabsH() + (mini.classList.contains("show") ? mini.offsetHeight : 0) + 24; }
+function spyLine(){ return tabsH() + (mini.classList.contains("show") ? $("bar").offsetHeight : 0) + 24; }
 function spyFrame(){
   if (page !== "dict") return;
   if (lockId) {
     // 눌러서 이동 중: 목적지에 도착하면 잠금 해제
     const t = $(lockId).getBoundingClientRect().top;
-    if (Math.abs(t - tabsH() - mini.offsetHeight) < 6) { clearTimeout(lockTimer); lockTimer = setTimeout(unlock, 120); }
+    if (Math.abs(t - tabsH() - $("bar").offsetHeight) < 6) { clearTimeout(lockTimer); lockTimer = setTimeout(unlock, 120); }
     return setOn(lockId);
   }
   const line = spyLine();
@@ -844,11 +904,14 @@ function markIn(el, t) {
 function showHits() {
   if (!lastHits.length) return;
   const first = lastHits[0];
-  const off = tabsH() + (page === "dict" ? mini.offsetHeight : 0) + 14;
-  scrollTo({top: Math.max(0, first.getBoundingClientRect().top + scrollY - off), behavior: REDUCE() ? "instant" : "smooth"});
-  document.querySelectorAll("mark.hit").forEach(m => { m.classList.remove("blink"); void m.offsetWidth; m.classList.add("blink"); });
-  lastHits.forEach(c => c.classList.add("hitflash"));
-  clearTimeout(showHits.t); showHits.t = setTimeout(() => lastHits.forEach(c => c.classList.remove("hitflash")), 1300);
+  const off = tabsH() + (page === "dict" ? $("bar").offsetHeight : 0) + 14;
+  smoothTo(first.getBoundingClientRect().top + scrollY - off);
+  const hits = lastHits.slice();
+  afterScroll(() => {
+    document.querySelectorAll("mark.hit").forEach(m => { m.classList.remove("blink"); void m.offsetWidth; m.classList.add("blink"); });
+    hits.forEach(c => c.classList.add("hitflash"));
+    clearTimeout(showHits.t); showHits.t = setTimeout(() => hits.forEach(c => c.classList.remove("hitflash")), 1660);
+  });
 }
 $("q").addEventListener("input", () => runSearch());
 $("sb").addEventListener("submit", e => { e.preventDefault(); runSearch(); $("q").blur(); showHits(); });
@@ -934,14 +997,14 @@ function setMmini(show) {
   if (show === mmini.classList.contains("show")) return;
   mmini.classList.toggle("show", show); mmini.inert = !show;
 }
-function mLine() { return tabsH() + (mmini.classList.contains("show") ? mmini.offsetHeight : 0) + 24; }
+function mLine() { return tabsH() + $("mbar").offsetHeight + 24; }
 function mFrame() {
   mtick = false;
   if (page !== "models" || !MON) return;
   // 큰 바 → 미니 바 전환 (사전 페이지와 같은 모션)
-  const mh = tabsH() + mmini.offsetHeight, b = $("mbar").getBoundingClientRect(), railBottom = $("mrail").getBoundingClientRect().bottom;
+  const mh = tabsH() + $("mbar").offsetHeight, b = $("mbar").getBoundingClientRect(), railBottom = $("mrail").getBoundingClientRect().bottom;
   const p = Math.min(1, Math.max(0, (mh - b.top) / Math.max(1, b.height))), bi = $("mbar").firstElementChild;
-  if (!REDUCE()) { bi.style.transform = p ? `scale(${(1 - .14 * p).toFixed(4)})` : ""; bi.style.opacity = p ? (1 - .75 * p).toFixed(3) : ""; }
+  if (false) { bi.style.transform = p ? `scale(${(1 - .14 * p).toFixed(4)})` : ""; bi.style.opacity = p ? (1 - .75 * p).toFixed(3) : ""; }
   const shown = mmini.classList.contains("show");
   if (!shown && railBottom < mh) setMmini(true); else if (shown && railBottom > mh + 12) setMmini(false);
   // 지금 보고 있는 카메라 계열 → 그 계열 브랜드만 레일에 표시
@@ -962,7 +1025,7 @@ function mFrame() {
     act = null;
     for (const br of cur.querySelectorAll(".mbr")) { if (br.hidden) continue; if (br.getBoundingClientRect().top <= line) act = br.id; else break; }
   }
-  if (mlock) { const t = $(mlock).getBoundingClientRect().top; if (Math.abs(t - (tabsH() + mmini.offsetHeight + 12)) < 8) { clearTimeout(mlockT); mlockT = setTimeout(() => { mlock = null; mFrame(); }, 120); } }
+  if (mlock) { const t = $(mlock).getBoundingClientRect().top; if (Math.abs(t - (tabsH() + $("mbar").offsetHeight + 12)) < 8) { clearTimeout(mlockT); mlockT = setTimeout(() => { mlock = null; mFrame(); }, 120); } }
   if (act !== mactive) { mactive = act; mTiles().forEach(t => t.classList.toggle("on", t.dataset.id === act)); }
 }
 addEventListener("scroll", () => { if (!mtick && page === "models") { mtick = true; requestAnimationFrame(mFrame); } }, {passive: true});
@@ -970,9 +1033,9 @@ addEventListener("resize", () => page === "models" && mFrame());
 ["touchstart", "wheel", "keydown"].forEach(ev => addEventListener(ev, () => { if (mlock) { mlock = null; clearTimeout(mlockT); } }, {passive: true}));
 function mGo(el, flash) {
   if (!el) return;
-  const top = el.getBoundingClientRect().top + scrollY - tabsH() - mmini.offsetHeight - 12;
-  scrollTo({top: Math.max(0, top), behavior: REDUCE() ? "instant" : "smooth"});
-  if (flash) { el.classList.add("hitflash"); setTimeout(() => el.classList.remove("hitflash"), 1000); }
+  const top = el.getBoundingClientRect().top + scrollY - tabsH() - $("mbar").offsetHeight - 12;
+  smoothTo(top);
+  if (flash) flashEls(flash === "cat" ? [...el.querySelectorAll(".mbr:not([hidden])")] : [el], "hitflash", 1660);
 }
 const onMTile = e => {
   const a = e.target.closest(".tile"); if (!a) return;
@@ -990,7 +1053,7 @@ const onMChip = e => {
   mBars();
   runSearch(true);
   const first = [...document.querySelectorAll("#mg .mcl")].find(c => !c.hidden);
-  if (first) setTimeout(() => mGo(first, false), 80);
+  if (first) setTimeout(() => mGo(first, "cat"), 80);
 };
 $("mchips").addEventListener("click", onMChip); $("mchips2").addEventListener("click", onMChip);
 
