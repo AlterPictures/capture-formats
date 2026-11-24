@@ -402,9 +402,6 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
 :root{
   --bg:#FFFFFF; --bg-2:#F5F5F5; --surface:#FFFFFF; --ink:#121212; --muted:#696C71; --line:#E6E6E6; --line-2:#D2D2D3;
   --accent:#B8965C; --accent-2:#484B50; --glow:rgba(184,150,92,.14);
-  --ok:#3E6B4F; --ok-bg:#EEF3EF; --warn:#8A6A2E; --warn-bg:#F6F0E4; --std-bg:#F2F2F2; --bad:#8E3A3A; --bad-bg:#F6ECEC;
-  --c-cine:#2B2B2D; --c-ilc:#58585C; --c-drone:#808084; --c-action:#A6A6A9; --c-gimbal:#C4C4C6;
-  --c-vr:#3C3C3F; --c-phone:#6B6B6F; --c-bcast:#939396; --c-legacy:#B4B4B7; --c-rec:#D4D4D6;
   --f-display:"Lato","Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
   --f-body:"Noto Sans KR","Lato",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --f-mono:"Lato","Noto Sans KR",system-ui,sans-serif;
@@ -413,16 +410,10 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#111112; --bg-2:#19191B; --surface:#161618; --ink:#F0F0F0; --muted:#9C9CA1; --line:#26262A; --line-2:#36363B;
   --accent:#CDB07A; --accent-2:#BDBDC2; --glow:rgba(205,176,122,.14);
-  --ok:#9CC7AA; --ok-bg:#1A241E; --warn:#D8BC86; --warn-bg:#29231A; --std-bg:#1F1F22; --bad:#E0A3A3; --bad-bg:#2C1C1C;
-  --c-cine:#EDEDEF; --c-ilc:#BEBEC2; --c-drone:#929297; --c-action:#6E6E73; --c-gimbal:#54545A;
-  --c-vr:#D6D6D9; --c-phone:#A8A8AC; --c-bcast:#808085; --c-legacy:#626267; --c-rec:#48484D;
   --shadow:none}}
 :root[data-theme="dark"]{
   --bg:#111112; --bg-2:#19191B; --surface:#161618; --ink:#F0F0F0; --muted:#9C9CA1; --line:#26262A; --line-2:#36363B;
   --accent:#CDB07A; --accent-2:#BDBDC2; --glow:rgba(205,176,122,.14);
-  --ok:#9CC7AA; --ok-bg:#1A241E; --warn:#D8BC86; --warn-bg:#29231A; --std-bg:#1F1F22; --bad:#E0A3A3; --bad-bg:#2C1C1C;
-  --c-cine:#EDEDEF; --c-ilc:#BEBEC2; --c-drone:#929297; --c-action:#6E6E73; --c-gimbal:#54545A;
-  --c-vr:#D6D6D9; --c-phone:#A8A8AC; --c-bcast:#808085; --c-legacy:#626267; --c-rec:#48484D;
   --shadow:none}
 :root[lang="ja"]{--f-body:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;--f-display:"Lato","Noto Sans JP","Hiragino Sans",system-ui,sans-serif}
 :root[lang="zh-Hans"]{--f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;--f-display:"Lato","Noto Sans SC","PingFang SC",system-ui,sans-serif}
@@ -470,18 +461,17 @@ h2{font-family:var(--f-display);font-weight:700;letter-spacing:.01em}
   .lang-btn{border-radius:0}
 }
 
-/* 색상바: 회색 농도 + 납작하게 */
+/* 색상바: 납작하게 */
 .bars{height:6px;border-radius:0;gap:1px}
 
 /* 분류 탭 · 상자 */
 .chip{border-radius:0}
 .chip .dot{border-radius:0;transform:rotate(45deg);width:6px;height:6px}
-.chip[aria-pressed="true"] .dot{background:var(--accent)}
 .tile{font-family:var(--f-display);border-radius:0;font-weight:700;letter-spacing:.03em}
 #bar .bar-in,#mbar .bar-in{border-radius:0;box-shadow:none;border-color:var(--line-2)}
 #bar .chips,#mbar .chips{background:var(--bg-2)}
 #bar .chip,#mbar .chip{border-radius:0}
-#bar .chip[aria-pressed="true"]::after,#mbar .chip[aria-pressed="true"]::after{background:var(--accent);border-radius:0}
+#bar .chip[aria-pressed="true"]::after,#mbar .chip[aria-pressed="true"]::after{border-radius:0}
 #bar .tile,#mbar .tile{border-radius:0;background:transparent}
 #bar .tile.on,#mbar .tile.on,.tile.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .tile:hover{border-color:var(--ink);color:var(--ink)}
@@ -490,15 +480,14 @@ h2{font-family:var(--f-display);font-weight:700;letter-spacing:.01em}
 /* 카드 · 표: 그림자 없이 얇은 선 */
 .card,.mbr,.tbl,.spec,.devs span,.ver,.v,.rule,.sb-x{border-radius:0}
 .card:hover{transform:none;border-color:var(--ink)}
-.mbr{border-top:2px solid var(--ink)}
 .mcl-h{font-family:var(--f-display);font-weight:700}
-.mcl-h i{border-radius:0;transform:rotate(45deg);width:8px;height:8px;background:var(--accent)}
+.mcl-h i{border-radius:0;transform:rotate(45deg);width:8px;height:8px}
 .mcl-h small,.n,.count{font-family:var(--f-display);letter-spacing:.06em}
 .ext{font-family:var(--f-display);font-weight:900;letter-spacing:.01em}
 .ext .dot{color:var(--accent)}
 .codec{font-family:var(--f-display);font-weight:700;letter-spacing:.02em;color:var(--accent-2)}
 .mbr li code,td.k{font-family:var(--f-display);letter-spacing:.02em;color:var(--ink)}
-.tag{border-radius:0;color:var(--muted);background:var(--bg-2);font-weight:500}
+.tag{border-radius:0}
 .card h3,.mbr h4{font-weight:700}
 thead th{font-family:var(--f-display);letter-spacing:.16em;background:var(--bg-2)}
 tbody tr:hover{background:var(--bg-2)}
