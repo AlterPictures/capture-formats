@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F2F3F6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0C0E13" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111112" media="(prefers-color-scheme: dark)">
 <meta name="format-detection" content="telephone=no">
 <title>촬영 원본 포맷 사전</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
 <style>
 /* Layout: 컬러그레이딩 룸 — 카테고리 비율 컬러바 히어로 → 고정 컨트롤(분류·검색·확장자 레일) → 확장자 '릴' 카드 → 기종/코덱/Log/DIT 레퍼런스 */
 :root{
@@ -398,6 +398,120 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
   #bar .tile sup,#mbar .tile sup{display:none}
   :root[lang="ja"] #bar .chip,:root[lang="ja"] #mbar .chip{font-size:9px;letter-spacing:-.05em}
 }
+/* ==== ALTER PICTURES 홈페이지 톤 (외형만 덮어씀 · 기능 무관) ==== */
+:root{
+  --bg:#FFFFFF; --bg-2:#F5F5F5; --surface:#FFFFFF; --ink:#121212; --muted:#696C71; --line:#E6E6E6; --line-2:#D2D2D3;
+  --accent:#B8965C; --accent-2:#484B50; --glow:rgba(184,150,92,.14);
+  --ok:#3E6B4F; --ok-bg:#EEF3EF; --warn:#8A6A2E; --warn-bg:#F6F0E4; --std-bg:#F2F2F2; --bad:#8E3A3A; --bad-bg:#F6ECEC;
+  --c-cine:#2B2B2D; --c-ilc:#58585C; --c-drone:#808084; --c-action:#A6A6A9; --c-gimbal:#C4C4C6;
+  --c-vr:#3C3C3F; --c-phone:#6B6B6F; --c-bcast:#939396; --c-legacy:#B4B4B7; --c-rec:#D4D4D6;
+  --f-display:"Lato","Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-body:"Noto Sans KR","Lato",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"Lato","Noto Sans KR",system-ui,sans-serif;
+  --r:2px; --shadow:none;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111112; --bg-2:#19191B; --surface:#161618; --ink:#F0F0F0; --muted:#9C9CA1; --line:#26262A; --line-2:#36363B;
+  --accent:#CDB07A; --accent-2:#BDBDC2; --glow:rgba(205,176,122,.14);
+  --ok:#9CC7AA; --ok-bg:#1A241E; --warn:#D8BC86; --warn-bg:#29231A; --std-bg:#1F1F22; --bad:#E0A3A3; --bad-bg:#2C1C1C;
+  --c-cine:#EDEDEF; --c-ilc:#BEBEC2; --c-drone:#929297; --c-action:#6E6E73; --c-gimbal:#54545A;
+  --c-vr:#D6D6D9; --c-phone:#A8A8AC; --c-bcast:#808085; --c-legacy:#626267; --c-rec:#48484D;
+  --shadow:none}}
+:root[data-theme="dark"]{
+  --bg:#111112; --bg-2:#19191B; --surface:#161618; --ink:#F0F0F0; --muted:#9C9CA1; --line:#26262A; --line-2:#36363B;
+  --accent:#CDB07A; --accent-2:#BDBDC2; --glow:rgba(205,176,122,.14);
+  --ok:#9CC7AA; --ok-bg:#1A241E; --warn:#D8BC86; --warn-bg:#29231A; --std-bg:#1F1F22; --bad:#E0A3A3; --bad-bg:#2C1C1C;
+  --c-cine:#EDEDEF; --c-ilc:#BEBEC2; --c-drone:#929297; --c-action:#6E6E73; --c-gimbal:#54545A;
+  --c-vr:#D6D6D9; --c-phone:#A8A8AC; --c-bcast:#808085; --c-legacy:#626267; --c-rec:#48484D;
+  --shadow:none}
+:root[lang="ja"]{--f-body:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;--f-display:"Lato","Noto Sans JP","Hiragino Sans",system-ui,sans-serif}
+:root[lang="zh-Hans"]{--f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;--f-display:"Lato","Noto Sans SC","PingFang SC",system-ui,sans-serif}
+:root[lang="en"]{--f-body:"Lato","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+body{font-weight:400;letter-spacing:-.005em}
+/* 홈페이지처럼 아주 옅은 다이아몬드 무늬 (밝은 화면만) */
+body{background-image:linear-gradient(135deg,transparent 0 49.9%,rgba(0,0,0,.016) 50% 100%),linear-gradient(45deg,transparent 0 49.9%,rgba(0,0,0,.012) 50% 100%);background-size:560px 560px;background-attachment:fixed}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background-image:none}}
+:root[data-theme="dark"] body{background-image:none}
+:focus-visible{border-radius:0}
+
+/* 머리: 타임코드 줄·빛 번짐·그라데이션 제목 없앰 */
+.hero::after{display:none}
+.tc{font-family:var(--f-display);font-size:11px;letter-spacing:.18em;text-transform:uppercase;gap:10px}
+.tc .rec,.tc > span:nth-child(2){display:none}
+.tc #asof::after{content:"·";margin-left:10px;opacity:.6}
+h1{font-family:var(--f-display);font-weight:900;letter-spacing:.02em;line-height:1.22}
+h1 em{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ink);font-weight:300}
+.htitle{border-bottom:1px solid var(--ink);padding-bottom:22px}
+.credit{opacity:.8}
+.credit span{font-family:var(--f-display);letter-spacing:.32em}
+.lede{color:var(--ink);font-weight:300;font-size:17px}
+.stat{border-left:1px solid var(--line-2)}
+.stat b{font-family:var(--f-display);font-weight:700;letter-spacing:.01em}
+.stat em{font-family:var(--f-display);letter-spacing:.24em;color:var(--accent);font-size:10.5px}
+h2{font-family:var(--f-display);font-weight:700;letter-spacing:.01em}
+.ov-head h2{letter-spacing:.12em}
+.concept{border-radius:0;border:0;border-top:1px solid var(--ink);background:transparent;padding:16px 4px 4px}
+.concept h3::before{background:transparent;color:var(--accent);width:auto;height:auto;border-radius:0;font:700 12px/1 var(--f-display);letter-spacing:.1em;content:"0" counter(ov);margin-right:10px}
+.concept h3 code{font-family:var(--f-display);color:var(--muted);font-weight:400;letter-spacing:.04em}
+
+/* 상단 메뉴: 상자 없이 글자 + 금색 밑줄 */
+.tabs{border-bottom:1px solid var(--line)}
+.brand{font-family:var(--f-display);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:12.5px}
+.brand i{border-radius:0;width:7px;height:7px;background:var(--accent);box-shadow:none;transform:rotate(45deg)}
+.seg{background:transparent;border:0;border-radius:0;padding:0}
+.seg a{border-radius:0;font-weight:500;letter-spacing:.02em}
+.seg a[aria-current="page"]{background:transparent;color:var(--ink);box-shadow:none;font-weight:700}
+.seg a[aria-current="page"]::after{width:28px;margin-left:-14px;height:2px;border-radius:0;bottom:0;background:var(--accent)}
+.lang-btn{border-radius:0;background:transparent;font-family:var(--f-display);letter-spacing:.14em}
+.lang-menu{border-radius:0;box-shadow:0 12px 30px -18px rgba(0,0,0,.35)}
+.lang-menu button{border-radius:0}
+@media (max-width:640px){
+  .seg a[aria-current="page"]::after{width:16px;margin-left:-8px}
+  .lang-btn{border-radius:0}
+}
+
+/* 색상바: 회색 농도 + 납작하게 */
+.bars{height:6px;border-radius:0;gap:1px}
+
+/* 분류 탭 · 상자 */
+.chip{border-radius:0}
+.chip .dot{border-radius:0;transform:rotate(45deg);width:6px;height:6px}
+.chip[aria-pressed="true"] .dot{background:var(--accent)}
+.tile{font-family:var(--f-display);border-radius:0;font-weight:700;letter-spacing:.03em}
+#bar .bar-in,#mbar .bar-in{border-radius:0;box-shadow:none;border-color:var(--line-2)}
+#bar .chips,#mbar .chips{background:var(--bg-2)}
+#bar .chip,#mbar .chip{border-radius:0}
+#bar .chip[aria-pressed="true"]::after,#mbar .chip[aria-pressed="true"]::after{background:var(--accent);border-radius:0}
+#bar .tile,#mbar .tile{border-radius:0;background:transparent}
+#bar .tile.on,#mbar .tile.on,.tile.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tile:hover{border-color:var(--ink);color:var(--ink)}
+@media (max-width:640px){ #bar .chip,#mbar .chip{border-radius:0} #bar .tile,#mbar .tile{border-radius:0} }
+
+/* 카드 · 표: 그림자 없이 얇은 선 */
+.card,.mbr,.tbl,.spec,.devs span,.ver,.v,.rule,.sb-x{border-radius:0}
+.card:hover{transform:none;border-color:var(--ink)}
+.mbr{border-top:2px solid var(--ink)}
+.mcl-h{font-family:var(--f-display);font-weight:700}
+.mcl-h i{border-radius:0;transform:rotate(45deg);width:8px;height:8px;background:var(--accent)}
+.mcl-h small,.n,.count{font-family:var(--f-display);letter-spacing:.06em}
+.ext{font-family:var(--f-display);font-weight:900;letter-spacing:.01em}
+.ext .dot{color:var(--accent)}
+.codec{font-family:var(--f-display);font-weight:700;letter-spacing:.02em;color:var(--accent-2)}
+.mbr li code,td.k{font-family:var(--f-display);letter-spacing:.02em;color:var(--ink)}
+.tag{border-radius:0;color:var(--muted);background:var(--bg-2);font-weight:500}
+.card h3,.mbr h4{font-weight:700}
+thead th{font-family:var(--f-display);letter-spacing:.16em;background:var(--bg-2)}
+tbody tr:hover{background:var(--bg-2)}
+td.dit{background:transparent;border-left:1px solid var(--line-2)}
+.tbl td::before{font-family:var(--f-display);letter-spacing:.14em}
+@media (max-width:640px){ .tbl tbody tr{border-radius:0} .tbl td.dit{border-radius:0;background:var(--bg-2)} }
+.fbrand .copy{font-family:var(--f-display);letter-spacing:.12em}
+
+/* 검색 · 위로 가기 */
+.sb{border-radius:0;box-shadow:0 10px 30px -16px rgba(0,0,0,.35)}
+.sb-go{border-radius:0;background:var(--ink);color:var(--bg);box-shadow:none;letter-spacing:.08em}
+.top{border-radius:0;box-shadow:none}
+mark.hit{border-radius:0}
 </style>
 
 <nav class="tabs gut" id="tabs" data-t-aria="aria.nav"><div class="wrap tabs-in"><a class="brand" href="#models"><i></i><span data-t="brand"></span></a><div class="seg"><a href="#models" data-tab="models"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="13" height="10" rx="2"/><path d="m15.5 11 5-3v8l-5-3"/></svg><span class="f" data-t="tab.models"></span><span class="s" data-t="tab.models.s"></span></a><a href="#dict" data-tab="dict"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h4"/></svg><span class="f" data-t="tab.dict"></span><span class="s" data-t="tab.dict.s"></span></a><a href="#codecs" data-tab="codecs"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span class="f" data-t="tab.codecs"></span><span class="s" data-t="tab.codecs.s"></span></a><a href="#logs" data-tab="logs"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M6 17c3-1 5-4 7-8s4-5 7-5"/></svg><span class="f" data-t="tab.logs"></span><span class="s" data-t="tab.logs.s"></span></a><a href="#sidecar" data-tab="sidecar"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M10 7v3M13 7v3M16 9v1"/></svg><span class="f" data-t="tab.sidecar"></span><span class="s" data-t="tab.sidecar.s"></span></a></div><div class="lang" id="lang"><button class="lang-btn" id="langBtn" type="button" aria-haspopup="menu" aria-expanded="false" data-t-aria="lang.label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span id="langCode"></span></button><ul class="lang-menu" id="langMenu" role="menu" hidden></ul></div></div></nav>
@@ -418,7 +532,6 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
   <div class="wrap">
     <div class="ref-head"><h2 data-t="dict.h"></h2><p data-t="dict.p"></p></div>
     <div class="bars" id="dbars" aria-hidden="true"></div>
-    <div class="bars-legend" id="dbarsLegend"></div>
   </div>
 </header>
 
@@ -463,7 +576,6 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:12.5px;border-top:1p
   <section class="ref" id="pg-models" data-page="models" hidden>
     <div class="ref-head"><h2 data-t="models.h"></h2><p data-t="models.p"></p></div>
     <div class="bars" id="bars" aria-hidden="true"></div>
-    <div class="bars-legend" id="barsLegend"></div>
 
     <div class="bar mbar" id="mbar"><div class="bar-in">
       <div class="chips" id="mchips" role="group" data-t-aria="aria.mcats"></div>
@@ -526,7 +638,7 @@ document.querySelectorAll("[data-t-title]").forEach(el => { el.title = T(el.data
 document.querySelectorAll("[data-t-ph]").forEach(el => { el.placeholder = T(el.dataset.tPh); });
 // 언어별 본문 글꼴
 if (LANG === "ja" || LANG === "zh") {
-  const fam = LANG === "ja" ? "IBM+Plex+Sans+JP:wght@400;500;600;700" : "Noto+Sans+SC:wght@400;500;600;700";
+  const fam = LANG === "ja" ? "Noto+Sans+JP:wght@300;400;500;700" : "Noto+Sans+SC:wght@400;500;600;700";
   document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${fam}&display=swap">`);
 }
 const E = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -548,11 +660,9 @@ $("stats").innerHTML = [
 ].map(([n, en, ko]) => `<div class="stat"><b>${n}</b><em>${en}</em><span>${ko}</span></div>`).join("");
 // 확장자 페이지: 분류별 포맷 수 비율
 $("dbars").innerHTML = Object.keys(CATS).map(k => `<i style="--cc:var(--c-${k});flex-grow:${perCat[k]}" data-k="${k}"></i>`).join("");
-$("dbarsLegend").innerHTML = Object.entries(CATS).map(([k, v]) => `<span style="--cc:var(--c-${k})">${v} ${perCat[k]}</span>`).join("");
 // 브랜드(메인) 페이지: 카메라 계열별 브랜드 수 비율
 const brandCnt = Object.fromEntries(Object.keys(CATS).map(k => [k, new Set(DATA.models.filter(m => m[0] === k).map(m => m[1])).size]));
 $("bars").innerHTML = Object.keys(CATS).filter(k => brandCnt[k]).map(k => `<i style="--cc:var(--c-${k});flex-grow:${brandCnt[k]}" data-k="${k}"></i>`).join("");
-$("barsLegend").innerHTML = Object.keys(CATS).filter(k => brandCnt[k]).map(k => `<span style="--cc:var(--c-${k})">${CATS[k]} ${brandCnt[k]}</span>`).join("");
 
 // 타임코드: 보는 사람 기기의 현재 시각 (Time of Day, 24fps) + 시간대
 (() => { const el = $("tc"), tz = $("tz"); const p = n => String(n).padStart(2, "0");
